@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mypass
+data:
+  password: dGVzdDEyMw==
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: mydb
+  name: mysql
+spec:
+  containers:
+  - image: mysql:5.7
+    name: con1
+    ports:
+    - containerPort: 3306
+    env: 
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: mypass
+            key: password 
+    - name: MYSQL_DATABASE
+      value: testdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    app: mydb
+
