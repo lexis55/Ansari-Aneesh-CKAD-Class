@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: myapp
+  name: robo-pod
+spec:
+  serviceAccount: robo 
+  containers:
+  - image: nginx:latest
+    name: con1
+    ports:
+    - containerPort: 80
