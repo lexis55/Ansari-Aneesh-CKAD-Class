@@ -1,0 +1,246 @@
+    1  cd app/
+    2  cp pod.yaml live-exec.yaml
+    3  vi live-exec.yaml 
+    4  kubectl create -f live-exec.yaml 
+    5  kubectl get pod
+    6  kubectl delete -f sec-pod.yaml 
+    7  kubectl get pod
+    8  kubectl describe pod live-exec 
+    9  kubectl get pod
+   10  kubectl delete -f live-exec.yaml 
+   11  vi live-exec.yaml 
+   12  kubectl create -f live-exec.yaml 
+   13  kubectl get pod
+   14  kubectl describe pod live-exec 
+   15  kubectl get pod
+   16  kubectl delete -f live-exec.yaml 
+   17  vi live-exec.yaml 
+   18  vi pod.yaml 
+   19  vi live-exec.yaml 
+   20  kubectl create -f live-exec.yaml 
+   21  kubectl delete -f live-exec.yaml 
+   22  kubectl create -f live-exec.yaml 
+   23  kubectl get pod
+   24  kubectl get pod -o wide
+   25  kubectl get svc
+   26  kubectl describe svc mypod 
+   27  kubectl get pod
+   28  kubectl delete -f live-exec.yaml 
+   29  vi live-exec.yaml 
+   30  kubectl create -f live-exec.yaml 
+   31  kubectl get pod
+   32  kubectl describe pod live-exec 
+   33  kubectl get pod
+   34  kubectl describe svc mypod 
+   35  kubectl get pod -o wide
+   36  kubectl delete -f live-exec.yaml 
+   37  cp live-exec.yaml live-http.yaml 
+   38  vi live-http.yaml 
+   39  kubectl create -f live-http.yaml 
+   40  kubectl get pod
+   41  vi live-http.yaml 
+   42  cp live-http.yaml live-tcp.yaml
+   43  vi live-tcp.yaml 
+   44  cp live-exec.yaml readi-exec.yaml
+   45  vi readi-exec.yaml 
+   46  kubectl get pod
+   47  kubectl delete -f live-http.yaml 
+   48  kubectl create -f readi-exec.yaml 
+   49  kubectl get pod
+   50  kubectl describe pod live-exec 
+   51  kubectl get pod
+   52  kubectl get svc 
+   53  kubectl describe svc mypod 
+   54  kubectl get pod -o wide
+   55  ls
+   56  vi live-http.yaml 
+   57  cp pod.yaml config-env.yaml
+   58  vi config-env.yaml 
+   59  cp pod.yaml mysql.yaml
+   60  vi mysql.yaml 
+   61  vi config-env.yaml 
+   62  mv config-env.yaml wordpress-env-conf.yaml
+   63  vi wordpress-env-conf.yaml 
+   64  kubectl create -f wordpress-env-conf.yaml 
+   65  kubectl create -f mysql.yaml 
+   66  kubectl get pod
+   67  kubectl get svc
+   68  kubectl delete -f live-exec.yaml 
+   69  kubectl get pod
+   70  kubectl get svc
+   71  kubectl describe pod wordpress 
+   72  vi wordpress-env-conf.yaml 
+   73  kubectl delete -f wordpress-env-conf.yaml -f mysql.yaml 
+   74  mkdir configmap
+   75  cp wordpress-env-conf.yaml mysql.yaml configmap/
+   76  ls
+   77  cd configmap/
+   78  ls
+   79  vi wordpress-env-conf.yaml 
+   80  kubectl create configmap wpconfig --from-literal WORDPRESS_DB_HOST=mysql-svc --from-literal WORDPRESS_DB_USER=root --from-literal WORDPRESS_DB_PASSWORD=test123 --from-literal WORDPRESS_DB_NAME=testdb --from-literal WORDPRESS_TABLE_PREFIX=wp_ --dry-run=client -o yaml
+   81  vi wordpress-env-conf.yaml 
+   82  kubectl create -f wordpress-env-conf.yaml 
+   83  kubectl get pod
+   84  kubectl describe pod wordpress 
+   85  kubectl get pod
+   86  kubectl exec -it wordpress -- bash
+   87  kubectl delete -f wordpress-env-conf.yaml 
+   88  cp wordpress-env-conf.yaml nginx-configmap.yaml
+   89  vi nginx-configmap.yaml 
+   90  kubectl create -f nginx-configmap.yaml 
+   91  vi nginx-configmap.yaml 
+   92  kubectl apply -f nginx-configmap.yaml 
+   93  kubectl get pod
+   94  kubectl get svc
+   95  kubectl delete -f nginx-configmap.yaml 
+   96  vi index.html
+   97  kubectl create configmap myindex --from-file=index.html --dry-run=client -o yaml
+   98  vi nginx-configmap.yaml 
+   99  kubectl create -f nginx-configmap.yaml 
+  100  vi nginx-configmap.yaml 
+  101  kubectl create -f nginx-configmap.yaml 
+  102  kubectl get configmaps 
+  103  kubectl describe configmaps myindex 
+  104  kubectl get pod
+  105  kubectl describe pod nginx-cm
+  106  ls
+  107  vi mysql.yaml 
+  108  echo aneesh | base64
+  109  echo YW5lZXNoCg== | base64 -d
+  110  kubectl create secret generic mypass --from-literal password=test123 --dry-run=client -o yaml
+  111  vi secret.yaml
+  112  vi mysql.yaml 
+  113  kubectl create -f mysql.yaml 
+  114  kubectl get secrets 
+  115  kubectl describe secrets mypass 
+  116  kubectl get secrets mypass -o yaml
+  117  kubectl get pod
+  118  kubectl describe pod mysql
+  119  kubectl get pod
+  120  kubectl exec -it mysql -- bash
+  121  ls
+  122  cp nginx-configmap.yaml nginx-secret-vol.yaml
+  123  vi nginx-secret-vol.yaml 
+  124  vi app.crt
+  125  kubectl create secret generic mycet --from-file=app.crt --dry-run=client -o yaml
+  126  vi nginx-secret-vol.yaml 
+  127  kubectl create -f nginx-secret-vol.yaml 
+  128  kubectl delete -f nginx-secret-vol.yaml 
+  129  kubectl create -f nginx-secret-vol.yaml 
+  130  kubectl get secrets 
+  131  kubectl describe secrets mycert
+  132  kubectl get secrets mycert -o yaml 
+  133  echo aGVsbG8sIHRoaXMgaXMgY2VydGlmaWNhdGUgZmlsZQo= | base64 -d
+  134  kubectl get secrets 
+  135  kubectl exec -it nginx-cm -- bash
+  136  cd ..
+  137  git init 
+  138  git add .
+  139  git commit -m "first commit"
+  140  kubeadm init 
+  141  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  142  id -u
+  143  kubectl get nodes
+  144  kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+  145  kubectl get nodes
+  146  vi .bashrc 
+  147  source .bashrc 
+  148  kubectl get pod
+  149  mkdir app
+  150  cd app/
+  151  ls
+  152  kubectl run mypod --image=nginx --labels app=myapp --port=80 --expose --dry-run=client -o yaml
+  153  kubectl run mypod --image=nginx --labels app=myapp --port=80 --expose --dry-run=client -o yaml > pod.yaml
+  154  vi pod.yaml 
+  155  kubectl create -f pod.yaml 
+  156  kubectl get pod
+  157  kubectl describe pod mypod 
+  158  kubectl get pods
+  159  kubectl describe pod mypod 
+  160  kubectl get pods
+  161  kubectl exec -it mypod -c con1 -- bash
+  162  kubectl get pods
+  163  kubectl exec -it mypod -c con2 -- bash
+  164  kubectl get pod
+  165  kubectl logs mypod -c con1 
+  166  kubectl logs mypod -c con2 
+  167  kubectl get pod
+  168  ls
+  169  cp pod.yaml init-container.yaml
+  170  vi init-container.yaml 
+  171  kubectl create -f init-container.yaml 
+  172  kubectl get pod
+  173  kubectl get svc
+  174  kubectl get pod
+  175  kubectl describe pod mypod-init 
+  176  kubectl exec -it mypod-init -- bash
+  177  kubectl delete -f init-container.yaml 
+  178  vi init-container.yaml 
+  179  kubectl create -f init-container.yaml 
+  180  kubectl ge tpod
+  181  kubectl get pod
+  182  kubectl describe pod mypod-init 
+  183  kubectl get pod
+  184  kubectl delete pod mypod
+  185  kubectl get pod --show-labels 
+  186  kubectl get svc --show-labels 
+  187  vi init-container.yaml 
+  188  kubectl delete -f init-container.yaml 
+  189  vi init-container.yaml 
+  190  kubectl create -f init-container.yaml 
+  191  kubectl get pod
+  192  vi init-container.yaml 
+  193  cp pod.yaml sec-pod.yaml
+  194  vi sec-pod.yaml 
+  195  kubectl create -f sec-pod.yaml 
+  196  kubectl get pod
+  197  kubectl delete -f init-container.yaml 
+  198  kubectl get pod
+  199  kubectl exec -it sec-context -c con1 -- bash
+  200  kubectl exec -it sec-context -c con2 -- bash
+  201  kubectl delete -f sec-pod.yaml 
+  202  vi sec-pod.yaml 
+  203  kubectl create -f sec-pod.yaml 
+  204  kubectl get pod
+  205  kubectl exec -it sec-context -c con1 -- bash
+  206  vi sec-pod.yaml 
+  207  kubectl exec -it sec-context -c con1 -- bash
+  208  kubectl exec -it sec-context -c con2 -- bash
+  209  vi sec-pod.yaml 
+  210  kubectl get nodes
+  211  kubectl describe node node1
+  212  kubectl get pod
+  213  cd app/
+  214  git commit -m "first commit"
+  215  git config --global user.email "cloudnewdevops@gmail.com"
+  216  git config --global user.name "cloudnewdevops"
+  217  git branch -M main
+  218  git remote add origin git@github.com:cloudnewdevops/test.git
+  219  ssh-keygen 
+  220  cat ~/.ssh/id_rsa.pub 
+  221  git push -u origin main
+  222  git branch -M main
+  223  git remote add origin git@github.com:eraneeshansari/test.git
+  224  git push -u origin main
+  225  git init
+  226  git add .
+  227  git commit -m "first commit"
+  228  git branch -M main
+  229  git remote add origin git@github.com:eraneeshansari/test.git
+  230  git push -u origin main
+  231  git config --global user.name "cloudnewdevops"
+  232  git config --global user.email "cloudnewdevops@gmail.com"
+  233  git push -u origin main
+  234  ls
+  235  rm -rf .git/
+  236  git init 
+  237  git add .
+  238  git commit -m "first commit"
+  239  git branch -M main
+  240  git remote add origin git@github.com:eraneeshansari/test.git
+  241  git push -u origin main
+  242  cd app/
+  243  kubectl get pods
+  244  kubectl delete -f ingress.yaml 
+  245  history 
+  246  history > cmd-history.txt
